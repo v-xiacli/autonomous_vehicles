@@ -2,6 +2,7 @@
 #include <iostream>
 
 using std::cout;
+using std::endl;
 
 exceladapter::exceladapter()
 {
@@ -28,11 +29,11 @@ void exceladapter::readfile(QString filename, QString sheetname, int colNo)
 
         QSqlQuery query(db);
         query.exec("select * from"+sheetname);
-        while (query.next())
+        do
         {
             valuelist.append(query.value(colNo));
             QString val=(valuelist.end()-1)->toString();
             stringlist.append(val);
-        }
+        }while (query.next());
         db.close();
 }

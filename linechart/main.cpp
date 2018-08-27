@@ -42,10 +42,10 @@ QT_CHARTS_USE_NAMESPACE
 int exedraw(int argc, char *argv[],double t_height, double t_length, double vdis)
 { QApplication a(argc, argv);
     exceladapter ea;
-    ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32e.xls");
+    ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32c.xls");
     double m_height=1.8;
-    double m_angle=0;
-    double anlgeres=0.27;
+    double m_angle=10;
+    double anlgeres=0.09;
     linedistribution ls(ea.stringlist,m_height,m_angle);
     QList<double> heightlist;
     QList<double> dislist;

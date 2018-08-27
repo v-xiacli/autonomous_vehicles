@@ -87,15 +87,14 @@ void PaintWx::drawpcl(double distance)
     double drawy;
     double lastdrawx;
     double lastdrawy;
-    cout<<drawx<<","<<drawy<<endl;
-
-    cout.precision(6);
-
+  int count=-1;
     for ( QList<LINE_ELLIPSE>::iterator it=pcl.begin(); it != pcl.end(); it++)
     {
         lastdrawx=-1e5;
         lastdrawy=-1e5;
-        //cout<<"bg"<<endl;
+        //cout<<count++<<"--------------------------"<<endl;
+         int flag=0;
+         count++;
         for ( QList<QPointF>::iterator it2=(*it).begin(); it2 != (*it).end(); it2++)
         {
             if(lastdrawy<-1e4)
@@ -110,12 +109,22 @@ void PaintWx::drawpcl(double distance)
             //cout<<"last"<<lastdrawx<<","<<lastdrawy<<endl;
             //cout<<"curret"<<drawx<<","<<drawy<<endl;
             painter.drawPoint(QPointF(drawx,drawy));
-            //painter.fillRect(drawx,       drawy, 1,                                       2, QBrush(Qt::darkYellow));
+
+            if(flag==0)
+            {
+                painter.drawText(QPointF(drawx,                           oy),
+                                 QString("No:"+QString::number(count)));
+                cout<<count<<"--------------------------"<<endl;
+                flag=1;
+            }
+                    //painter.fillRect(drawx,       drawy, 1,                                       2, QBrush(Qt::darkYellow));
             //lastdrawx=drawx;
             //lastdrawy=drawy;
             //painter.drawLine(lastdrawx, lastdrawy, drawx, drawy);
         }
          //cout<<"--------------------------";
     }
+
+    painter.fillRect(ox+v_distance*factor,             oy-target_length*factor/2,               target_length*factor,                                       target_length*factor, QBrush(Qt::red));
 
 }
