@@ -35,27 +35,32 @@
 #include "linedistribution.h"
 #include "paintwx.h"
 #include "castinground.h"
+#include "target.h"
+#include "mount.h"
 QT_CHARTS_USE_NAMESPACE
 
 
 
-int exedraw(int argc, char *argv[],double t_height, double t_length, double vdis)
+int exedraw(int argc, char *argv[], double vdis, double ydev,double t_width,double t_height, double t_length)
 { QApplication a(argc, argv);
     exceladapter ea;
     ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32c.xls");
-    double m_height=1.8;
-    double m_angle=10;
-    double anlgeres=0.09;
-    linedistribution ls(ea.stringlist,m_height,m_angle);
+
+    target tg(vdis,ydev,t_width,t_height,t_length);
+    mount mt(1.7,0,0.09);
     QList<double> heightlist;
     QList<double> dislist;
-    ls.get_heightlist(vdis,heightlist,dislist);    
-    castinground myci(m_height,anlgeres,ls.getvectorangle());
 
-    PaintWx w(t_height,t_length,m_height,vdis);
+    linedistribution ls(ea.stringlist,mt.m_height,mt.m_angle);
+    ls.get_heightlist(vdis,heightlist,dislist);    
+
+    castinground myci(mt.m_height,mt.anlgeres,ls.getvectorangle());
+    PaintWx w(&tg,&mt);
+
     w.verlist=heightlist;
     w.dislist=dislist;
-    w.pcl=myci.Getpcl(m_angle);
+    w.pcl=myci.Getpcl(mt.m_angle);
+    w.pcl_t=myci.GetPclofTarget(mt.m_angle,tg);
     w.show();
     return a.exec();
 }
@@ -63,11 +68,10 @@ int exedraw(int argc, char *argv[],double t_height, double t_length, double vdis
 
 int main(int argc, char *argv[])
 {
-
-      exedraw(argc,argv,0.5, 0.3, 5);
-      exedraw(argc,argv,1.5, 1, 20);
-      exedraw(argc,argv,1.5, 1, 50);
-      return exedraw(argc,argv,1.5, 1, 100);
+              exedraw(argc,argv,5,  5, 10, 1,  5);
+              exedraw(argc,argv,20, 5, 10, 1,  5);
+              exedraw(argc,argv,50, 5, 10, 1,  50);
+      return  exedraw(argc,argv,100,5, 100,1,  100);
 /*
 //![1]
     QLineSeries *series = new QLineSeries();
