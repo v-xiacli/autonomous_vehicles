@@ -3,7 +3,9 @@
 #include <QPen>
 #include <iostream>
 #include <QPointF>
-
+#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 using namespace std;
 
 PaintWx::PaintWx(target * _tg, mount *_mt)
@@ -27,13 +29,19 @@ void PaintWx::paintEvent(QPaintEvent *event)
 
 void  PaintWx::drawv()
 {
+    QScreen *screen=QGuiApplication::primaryScreen ();
+    //qDebug()<<screen->availableGeometry();
+    QRect mm=screen->availableGeometry() ;
+    double g_nActScreenX = mm.x();
+    double g_nActScreenY = mm.y();
 
-	double W = 800;
-	double H = 600;
+    double W = 1600;
+    double H = 900;
+
 	double ox = 10;
 	double oy = H - 10;
-	double xfactor = (W - ox * 2) / v_distance;
-	double vfactor = xfactor * floor(v_distance / target_height) / 5;
+    double xfactor = (W - ox * 2) /( v_distance+ptg->length);
+    double vfactor = xfactor * floor(( v_distance+ptg->length) / target_height) / 5;
 	QPainter painter(this);
 	painter.setPen(QPen(Qt::red));
 	painter.drawLine(ox, oy, ox, oy - mount_height * vfactor);
@@ -77,24 +85,29 @@ void  PaintWx::drawv()
 
 void PaintWx::drawpcl(double distance)
 {
-	double W = 800;
-	double H = 600;
-	double ox = 400;
-	double oy = 300;
+    QScreen *screen=QGuiApplication::primaryScreen ();
+    //qDebug()<<screen->availableGeometry();
+    QRect mm=screen->availableGeometry() ;
+    double g_nActScreenX = mm.x();
+    double g_nActScreenY = mm.y();
+
+    double W = 1600;
+    double H = 900;
+    double ox = W/2;
+    double oy = H/2;
 	double margin = 20;
-	double factor = (H - oy - margin) / distance;
+    double factor = (H - oy - margin) / ( distance+ptg->length);
 	QPainter painter(this);
-	painter.setPen(QPen(Qt::green, 1));
+    painter.setPen(QPen(Qt::blue, 1.5));
 	double drawx;
 	double drawy;
-	double lastdrawx;
-	double lastdrawy;
+    double lastdrawx;
+    double lastdrawy;
 	int count = -1;
 	for (QList<LINE_ELLIPSE>::iterator it = pcl.begin(); it != pcl.end(); it++)
 	{
 		lastdrawx = -1e5;
-		lastdrawy = -1e5;
-		//cout<<count++<<"--------------------------"<<endl;
+        lastdrawy = -1e5;
 		int flag = 0;
 		count++;
 		for (QList<QPointF>::iterator it2 = (*it).begin(); it2 != (*it).end(); it2++)
@@ -107,25 +120,23 @@ void PaintWx::drawpcl(double distance)
 				continue;
 			}
 			drawx = factor * (*it2).x() + ox;
-			drawy = factor * (*it2).y() + oy;
-			//cout<<"last"<<lastdrawx<<","<<lastdrawy<<endl;
-			//cout<<"curret"<<drawx<<","<<drawy<<endl;
+            drawy = factor * (*it2).y() + oy;
 			painter.drawPoint(QPointF(drawx, drawy));
 
 			if (flag == 0)
 			{
-				painter.drawText(QPointF(drawx, oy),
-					QString("No:" + QString::number(count)));
-				//cout<<count<<"--------------------------"<<endl;
+                painter.drawText(QPointF(drawx, drawy),
+                    QString("R" + QString::number(count)+"_"+ QString::number((*it2).x(),10,1)+"m"));
 				flag = 1;
 			}
 		}
 	}
 
     painter.setPen(QPen(Qt::blue, 1));
+    cout<<ptg<<endl;
     painter.drawRect(QRectF(ox + ptg->distance * factor, oy - ptg->width * factor / 2 + ptg->ydev*factor, ptg->length*factor, ptg->width*factor));
-    painter.fillRect(ox + ptg->distance * factor + 1, oy - ptg->width  * factor / 2 + 1 + ptg->ydev*factor, ptg->length*factor - 1, ptg->width*factor - 1, QBrush(Qt::white));
-	painter.setPen(QPen(Qt::red, 1));
+    painter.fillRect(ox + ptg->distance * factor + 1, oy - ptg->width  * factor / 2 + 1 + ptg->ydev*factor, ptg->length*factor - 1, ptg->width*factor - 1, QBrush(Qt::darkGray));
+    painter.setPen(QPen(Qt::red, 1));
 	count = -1;
 	for (QList<LINE_ELLIPSE>::iterator it = pcl_t.begin(); it != pcl_t.end(); it++)
 	{
@@ -148,8 +159,8 @@ void PaintWx::drawpcl(double distance)
 
 			if (flag == 0)
 			{
-				painter.drawText(QPointF(drawx, oy),
-					QString("No:" + QString::number(count)));
+                painter.drawText(QPointF(drawx, drawy+(2-count)*2),
+                    QString("R" + QString::number(count)+"_"+ QString::number((*it2).x(),10,1)+"m"));
 				flag = 1;
 			}
 		}

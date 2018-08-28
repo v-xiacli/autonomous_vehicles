@@ -1,6 +1,7 @@
 #ifndef TARGET_H
 #define TARGET_H
-
+#include <iostream>
+using namespace std;
 
 class target
 {
@@ -22,6 +23,12 @@ public:
 		this->length = _length;
 		this->ydev = _ydev;
 	}
+
+    friend ostream& operator<<(ostream& output,target * c)
+    {
+      output<<"distance "<<c->distance<<",width "<<c->width<<",height "<<c->height<<",length "<<c->length<<",ydev "<<c->ydev;
+      return output;
+    }
 
 	double ydev;
 	double distance;
