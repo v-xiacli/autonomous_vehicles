@@ -9,10 +9,10 @@
 class exceladapter
 {
 public:
-    exceladapter();
-    QList<QVariant> valuelist;
-    QList<QString> stringlist;
-    void readfile(QString filename, QString sheetname="[Sheet1$]",int colNo=0);
+	exceladapter();
+	QList<QVariant> valuelist;
+	QList<QString> stringlist;
+	void readfile(QString filename, QString sheetname = "[Sheet1$]", int colNo = 0);
 };
 
 #endif // EXCELADAPTER_H

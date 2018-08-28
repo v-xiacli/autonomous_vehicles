@@ -41,71 +41,73 @@ QT_CHARTS_USE_NAMESPACE
 
 
 
-int exedraw(int argc, char *argv[], double vdis, double ydev,double t_width,double t_height, double t_length)
-{ QApplication a(argc, argv);
-    exceladapter ea;
-    ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32c.xls");
+int exedraw(int argc, char *argv[], double vdis, double ydev, double t_width, double t_height, double t_length)
+{
+	QApplication a(argc, argv);
+	exceladapter ea;
+	ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32c.xls");
 
-    target tg(vdis,ydev,t_width,t_height,t_length);
-    mount mt(1.7,0,0.09);
-    QList<double> heightlist;
-    QList<double> dislist;
+	target tg(vdis, ydev, t_width, t_height, t_length);
+	mount mt(1.7, 0, 0.09);
+	QList<double> heightlist;
+	QList<double> dislist;
 
-    linedistribution ls(ea.stringlist,mt.m_height,mt.m_angle);
-    ls.get_heightlist(vdis,heightlist,dislist);    
+	linedistribution ls(ea.stringlist, mt.m_height, mt.m_angle);
+	ls.get_heightlist(vdis, heightlist, dislist);
 
-    castinground myci(mt.m_height,mt.anlgeres,ls.getvectorangle());
-    PaintWx w(&tg,&mt);
+	castinground myci(mt.m_height, mt.anlgeres, ls.getvectorangle());
+	PaintWx w(&tg, &mt);
 
-    w.verlist=heightlist;
-    w.dislist=dislist;
-    w.pcl=myci.Getpcl(mt.m_angle);
-    w.pcl_t=myci.GetPclofTarget(mt.m_angle,tg);
-    w.show();
-    return a.exec();
+	w.verlist = heightlist;
+	w.dislist = dislist;
+	w.pcl = myci.Getpcl(mt.m_angle);
+	w.pcl_t = myci.GetPclofTarget(mt.m_angle, tg);
+	w.show();
+	return a.exec();
 }
 
 
 int main(int argc, char *argv[])
 {
-              exedraw(argc,argv,5,  5, 10, 1,  5);
-              exedraw(argc,argv,20, 5, 10, 1,  5);
-              exedraw(argc,argv,50, 5, 10, 1,  50);
-      return  exedraw(argc,argv,100,5, 100,1,  100);
-/*
-//![1]
-    QLineSeries *series = new QLineSeries();
-//![1]
+	exedraw(argc, argv, 5, 5, 10, 1, 5);
+	//exedraw(argc,argv,20, 5, 10, 1,  5);
+	//exedraw(argc,argv,50, 5, 10, 1,  50);
+	//exedraw(argc,argv,100,5, 100,1,  100);
+	return 0;
+	/*
+	//![1]
+		QLineSeries *series = new QLineSeries();
+	//![1]
 
-//![2]
-    series->append(0, 6);
-    series->append(2, 4);
-    series->append(3, 8);
-    series->append(7, 4);
-    series->append(10, 5);
-    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
-//![2]
+	//![2]
+		series->append(0, 6);
+		series->append(2, 4);
+		series->append(3, 8);
+		series->append(7, 4);
+		series->append(10, 5);
+		*series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
+	//![2]
 
-//![3]
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-    chart->setTitle("Simple line chart example");
-//![3]
+	//![3]
+		QChart *chart = new QChart();
+		chart->legend()->hide();
+		chart->addSeries(series);
+		chart->createDefaultAxes();
+		chart->setTitle("Simple line chart example");
+	//![3]
 
-//![4]
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-//![4]
+	//![4]
+		QChartView *chartView = new QChartView(chart);
+		chartView->setRenderHint(QPainter::Antialiasing);
+	//![4]
 
 
-//![5]
-    QMainWindow window;
-    window.setCentralWidget(chartView);
-    window.resize(400, 300);
-    window.show();
-//![5]
-*/
+	//![5]
+		QMainWindow window;
+		window.setCentralWidget(chartView);
+		window.resize(400, 300);
+		window.show();
+	//![5]
+	*/
 
 }
