@@ -122,10 +122,9 @@ void PaintWx::drawpcl(double distance)
 		}
 	}
 
-	painter.setPen(QPen(Qt::blue, 1));
-    cout<< ptg->ydev*factor<<endl;
-	painter.drawRect(QRectF(ox + v_distance * factor, oy - target_length * factor / 2 + ptg->ydev*factor, target_length*factor, target_length*factor));
-	painter.fillRect(ox + v_distance * factor + 1, oy - target_length * factor / 2 + 1 + ptg->ydev*factor, target_length*factor - 1, target_length*factor - 1, QBrush(Qt::white));
+    painter.setPen(QPen(Qt::blue, 1));
+    painter.drawRect(QRectF(ox + ptg->distance * factor, oy - ptg->width * factor / 2 + ptg->ydev*factor, ptg->length*factor, ptg->width*factor));
+    painter.fillRect(ox + ptg->distance * factor + 1, oy - ptg->width  * factor / 2 + 1 + ptg->ydev*factor, ptg->length*factor - 1, ptg->width*factor - 1, QBrush(Qt::white));
 	painter.setPen(QPen(Qt::red, 1));
 	count = -1;
 	for (QList<LINE_ELLIPSE>::iterator it = pcl_t.begin(); it != pcl_t.end(); it++)
