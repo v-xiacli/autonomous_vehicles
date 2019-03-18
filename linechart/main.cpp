@@ -45,7 +45,7 @@ int exedraw(int argc, char *argv[], double vdis, double ydev, double t_width, do
 {
 	QApplication a(argc, argv);
 	exceladapter ea;
-    ea.readfile("C:\\CODELIB\\udacity\\udacity\\linechart\\anglelist_32e.xls");
+    ea.readfile2("D:\\linechart\\anglelist_64.csv");
 
 	target tg(vdis, ydev, t_width, t_height, t_length);
     mount mt(1.7, 0, 0.09);
@@ -70,10 +70,10 @@ int exedraw(int argc, char *argv[], double vdis, double ydev, double t_width, do
 int main(int argc, char *argv[])
 {
      exedraw(argc, argv, 2, 0,0.5, 0, 3);
-     exedraw(argc, argv, 5, 0, 0.5, 0, 3);
-     exedraw(argc, argv, 10, 0, 0.5, 0, 3);
-     exedraw(argc, argv, 15, 0, 0.5, 0, 3);
-     exedraw(argc, argv,50, 0, 0.5, 0, 3);
+    // exedraw(argc, argv, 5, 0, 0.5, 0, 3);
+    //exedraw(argc, argv, 10, 0, 0.5, 0, 3);
+     //exedraw(argc, argv, 15, 0, 0.5, 0, 3);
+     //exedraw(argc, argv,50, 0, 0.5, 0, 3);
      //exedraw(argc, argv, 2, 5, 5, 1.3, 100);
 
     //exedraw(argc, argv, 40, 5, 5,1.3, 100);
